@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useContext } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -17,7 +18,7 @@ import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
 import { makeStyles } from "@mui/styles";
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import insta from "../Assets/Instagram.JPG";
 import bg from "../Assets/insta.png";
@@ -26,8 +27,9 @@ import img2 from "../Assets/img2.jpg";
 import img3 from "../Assets/img3.jpg";
 import img4 from "../Assets/img4.jpg";
 import img5 from "../Assets/img5.jpg";
-
-export default function MultiActionAreaCard() {
+import { AuthContext } from "../Context/AuthContext";
+export default function Login() {
+  const store = useContext(AuthContext);
   const useStyles = makeStyles({
     text1: {
       color: "grey",
@@ -42,6 +44,27 @@ export default function MultiActionAreaCard() {
     },
   });
   const classes = useStyles();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
+  const { login } = useContext(AuthContext);
+  const handleClick = async () => {
+    try {
+      setError("");
+      setLoading(true);
+      let res = await login(email, password);
+      setLoading(false);
+      history.push("/");
+    } catch (err) {
+      setError(err);
+      setTimeout(() => {
+        setError("");
+      }, 2000);
+      setLoading(false);
+    }
+  };
   return (
     <div className="loginWrapper">
       <div
@@ -87,11 +110,7 @@ export default function MultiActionAreaCard() {
             <img src={insta} alt="" />
           </div>
           <CardContent>
-            {true && (
-              <Alert severity="error">
-                This is an error alert — check it out!
-              </Alert>
-            )}
+            {error != "" && <Alert severity="error">{error}</Alert>}
             <TextField
               id="outlined-basic"
               label="Email"
@@ -99,6 +118,8 @@ export default function MultiActionAreaCard() {
               fullWidth={true}
               margin="dense"
               size="small"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               id="outlined-basic"
@@ -107,17 +128,27 @@ export default function MultiActionAreaCard() {
               fullWidth={true}
               margin="dense"
               size="small"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <Typography
               color="primary"
               className={classes.text2}
               variiant="subtitle1"
             >
-              Forgot Password ?
+              <Link to="/reset" style={{ textDecoration: "none" }}>
+                Forgot Password ?
+              </Link>
             </Typography>
           </CardContent>
           <CardActions>
-            <Button color="primary" fullWidth={true} variant="contained">
+            <Button
+              color="primary"
+              fullWidth={true}
+              variant="contained"
+              onClick={handleClick}
+              disabled={loading}
+            >
               Log in
             </Button>
           </CardActions>
@@ -127,7 +158,7 @@ export default function MultiActionAreaCard() {
             <Typography className={classes.text1} variant="subtitle1">
               Don't have an account?{" "}
               <Link to="/signup" style={{ textDecoration: "none" }}>
-                Sign Up
+                Sign up
               </Link>
             </Typography>
           </CardContent>

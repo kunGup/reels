@@ -7,6 +7,7 @@ import ResetPassword from "./Components/ResetPassword";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { AuthProvider } from "./Context/AuthContext";
 import PrivateRoute from "./Components/PrivateRoute";
+import Profile from "./Components/Profile";
 function App() {
   return (
     <BrowserRouter>
@@ -15,6 +16,7 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/reset" component={ResetPassword} />
           <Route path="/signup" component={Signup} />
+          <Route path="/profile/:id" component={Profile} />
           <PrivateRoute path="/" component={Feed} />
         </Switch>
       </AuthProvider>

@@ -6,18 +6,10 @@ import Video from "./Video";
 import Comments from "./Comments";
 import "./Posts.css";
 import Like from "./Like";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import AddComment from "./AddComment";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea, CardActions } from "@mui/material";
-import DialogTitle from "@mui/material/DialogTitle";
 import Avatar from "@mui/material/Avatar";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 function Posts({ userData }) {
@@ -48,7 +40,6 @@ function Posts({ userData }) {
   const callback = (entries) => {
     entries.forEach((entry) => {
       let ele = entry.target.childNodes[0];
-      console.log(ele);
       ele.play().then(() => {
         if (!ele.paused && !entry.isIntersecting) {
           ele.pause();
@@ -107,7 +98,7 @@ function Posts({ userData }) {
                       <Card variant="outlined" className="card2">
                         <Typography style={{ padding: "0.4rem" }}>
                           {post.likes.length == 0
-                            ? ""
+                            ? "Liked by nobody"
                             : `Liked by ${post.likes.length}`}
                         </Typography>
                         <div style={{ display: "flex" }}>

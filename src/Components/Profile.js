@@ -44,9 +44,11 @@ function Profile() {
   useEffect(async () => {
     if (userData != null) {
       let parr = [];
-      for (let i = 0; i < userData.postIds.length; i++) {
-        let postData = await database.posts.doc(userData.postIds[i]).get();
-        parr.push({ ...postData.data(), postId: postData.id });
+      if (userData.postIds) {
+        for (let i = 0; i < userData.postIds.length; i++) {
+          let postData = await database.posts.doc(userData.postIds[i]).get();
+          parr.push({ ...postData.data(), postId: postData.id });
+        }
       }
       setPosts(parr);
     }
@@ -65,9 +67,12 @@ function Profile() {
                 <img src={userData.profileUrl} alt="" />
               </div>
               <div className="info">
-                <Typography variant="h5">Email: {userData.email}</Typography>
-                <Typography variant="h6">
-                  Posts: {userData.postIds.length}
+                <Typography variant="subtitle1">
+                  <b>Email:</b> {userData.email}
+                </Typography>
+                <Typography variant="subtitle2">
+                  <b>Posts:</b>{" "}
+                  {userData.postIds == undefined ? 0 : userData.postIds.length}
                 </Typography>
               </div>
             </div>

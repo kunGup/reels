@@ -20,9 +20,9 @@
 }
 @media only screen and (max-width: 620px) {
   .loginWrapper {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
-  .signupCard {
+  .loginCard {
     width: 60%;
   }
   .insta-logo img {

@@ -7,9 +7,14 @@ function Video(props) {
     e.target.muted = !e.target.muted;
   };
   const handleScroll = (e) => {
-    let next = ReactDOM.findDOMNode(e.target).parentNode.nextSibling;
+    let par = ReactDOM.findDOMNode(e.target).parentNode;
+    let next = par.nextSibling;
+    let first = par.parentNode.firstChild;
     if (next) {
-      next.scrollIntoView();
+      next.scrollIntoView({ behavior: "smooth" });
+      e.target.muted = true;
+    } else {
+      first.scrollIntoView();
       e.target.muted = true;
     }
   };

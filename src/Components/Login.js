@@ -58,10 +58,11 @@ export default function Login() {
       setLoading(false);
       history.push("/");
     } catch (err) {
+      console.log(err);
       setError(err);
       setTimeout(() => {
         setError("");
-      }, 2000);
+      }, 5000);
       setLoading(false);
     }
   };
@@ -110,7 +111,7 @@ export default function Login() {
             <img src={insta} alt="" />
           </div>
           <CardContent>
-            {error != "" && <Alert severity="error">{error}</Alert>}
+            {error != "" && <Alert severity="error">{error.message}</Alert>}
             <TextField
               id="outlined-basic"
               label="Email"
@@ -129,6 +130,7 @@ export default function Login() {
               margin="dense"
               size="small"
               value={password}
+              type="password"
               onChange={(e) => setPassword(e.target.value)}
             />
             <Typography

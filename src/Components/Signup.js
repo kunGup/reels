@@ -36,10 +36,10 @@ export default function MultiActionAreaCard() {
   const { signup } = useContext(AuthContext);
   const handleClick = async () => {
     if (file == null) {
-      setError("Please upload profile image first");
+      setError({ message: "Please upload profile image first" });
       setTimeout(() => {
         setError("");
-      }, 2000);
+      }, 5000);
       return;
     }
     try {
@@ -57,7 +57,7 @@ export default function MultiActionAreaCard() {
         setError(error);
         setTimeout(() => {
           setError("");
-        }, 2000);
+        }, 5000);
         return;
       }
       function fn3() {
@@ -78,7 +78,7 @@ export default function MultiActionAreaCard() {
       setError(err);
       setTimeout(() => {
         setError("");
-      }, 2000);
+      }, 5000);
     }
   };
   return (
@@ -92,7 +92,7 @@ export default function MultiActionAreaCard() {
             <Typography className={classes.text1} variant="subtitle1">
               Signup to see photos and videos from your friends
             </Typography>
-            {error != "" && <Alert severity="error">{error}</Alert>}
+            {error != "" && <Alert severity="error">{error.message}</Alert>}
             <TextField
               id="outlined-basic"
               label="Email"
@@ -111,6 +111,7 @@ export default function MultiActionAreaCard() {
               margin="dense"
               size="small"
               value={password}
+              type="password"
               onChange={(e) => setPassword(e.target.value)}
             />
             <TextField

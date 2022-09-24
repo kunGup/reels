@@ -57,6 +57,7 @@ export default function MultiActionAreaCard() {
         setError(error);
         setTimeout(() => {
           setError("");
+          setLoading(false);
         }, 5000);
         return;
       }
@@ -71,9 +72,9 @@ export default function MultiActionAreaCard() {
             createdAt: database.getTimeStamp(),
           });
         });
-        setLoading(false);
         history.push("/");
       }
+      
     } catch (err) {
       setError(err);
       setTimeout(() => {
